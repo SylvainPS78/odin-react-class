@@ -1,12 +1,14 @@
-import "./assets/styles/App.css";
-import Footer from "./assets/components/Footer.jsx";
+import React from "react";
+import FunctionalInput from "./components/FunctionalInput";
+import ClassInput from "./components/ClassInput";
+import "./style.css";
 
-function App() {
+export default function App() {
   return (
     <>
-      <Footer />
+      <FunctionalInput name="Functional component!" />
+      <div className="divider" />
+      <ClassInput name="Class based component!" />
     </>
   );
 }
-
-export default App;
