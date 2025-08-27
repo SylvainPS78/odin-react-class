@@ -1,0 +1,174 @@
+@use "variables" as *;
+@use "fonts";
+
+// ==============================================
+// Utilities
+// ==============================================
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+// ==============================================
+// Base Styles
+// ==============================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Base elements
+body {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  font-family: $font-body;
+  color: $dark-grey;
+  background-color: $primary-blue;
+  font-weight: 400;
+}
+
+// Typography
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+  color: $dark-grey;
+  font-weight: 700;
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+// Media elements
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+// Form elements
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+// Link elements
+a {
+  font-weight: 500;
+  color: $dark-grey;
+  text-decoration: inherit;
+
+  &:hover {
+    color: $primary-blue;
+  }
+}
+
+//button elements - Base styles
+button {
+  background: linear-gradient(135deg, $primary-blue, $light-primary-blue);
+  color: $white;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.4rem;
+  font-size: $font-size-small;
+  font-family: $font-body;
+  cursor: pointer;
+  transition: all $transition-normal;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: $shadow-medium;
+    border-color: $primary-blue;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  &:disabled {
+    background: $light-grey;
+    color: $medium-grey;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    outline: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+      border: none;
+      transform: none;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+// Input - Base styles
+.input-field {
+  width: 100%;
+  padding: 0.4rem;
+  border: 2px solid $light-grey;
+  border-radius: $input-radius;
+  font-size: $font-size-small;
+  font-family: $font-body;
+  margin-bottom: 0.5rem;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-blue;
+    box-shadow: 0 0 0 3px rgba($primary-blue, 0.1);
+  }
+
+  &.error {
+    border-color: $accent-red;
+    box-shadow: 0 0 0 3px rgba($accent-red, 0.1);
+  }
+}
+
+// ==============================================
+// Footer
+// ==============================================
+footer {
+  color: $light-grey;
+  text-align: center;
+  position: fixed;
+  bottom: 1vh;
+  left: 0;
+  width: 100%;
+  font-family: $font-body;
+  font-size: $font-size-small;
+  max-height: 6vh;
+  z-index: $z-index-footer;
+
+  // @media (max-width: px) {}
+}
