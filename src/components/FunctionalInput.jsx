@@ -9,6 +9,7 @@ const FunctionalInput = ({ name }) => {
   */
   const [todos, setTodos] = useState(["Just some demo tasks", "As an example"]);
   const [inputVal, setInputVal] = useState("");
+  const [count, setCount] = useState(todos.length);
 
   const handleInputChange = (e) => {
     setInputVal(e.target.value);
@@ -18,10 +19,16 @@ const FunctionalInput = ({ name }) => {
     e.preventDefault();
     setTodos((todo) => [...todo, inputVal]);
     setInputVal("");
+    const newCount = count + 1;
+    setCount(newCount);
   };
 
   const handleDelete = (indexToDelete) => {
-    setTodos((prevTodos) => prevTodos.filter((_, index) => index !== indexToDelete));
+    setTodos((prevTodos) =>
+      prevTodos.filter((_, index) => index !== indexToDelete)
+    );
+    const newLength = todos.length - 1;
+    setCount(newLength);
   };
 
   return (
@@ -41,11 +48,18 @@ const FunctionalInput = ({ name }) => {
       </form>
       <h4>All the tasks!</h4>
       {/* The list of all the To-Do's, displayed */}
+      <p>You have {count} tasks in your list</p>
       <ul>
         {todos.map((todo, index) => (
           <>
             <li key={todo}>{todo}</li>
-            <button onClick={() => handleDelete(index)}>DELETE</button>
+            <button
+              onClick={() => {
+                handleDelete(index);
+              }}
+            >
+              DELETE
+            </button>
           </>
         ))}
       </ul>

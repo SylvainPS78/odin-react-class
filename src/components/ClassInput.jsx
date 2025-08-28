@@ -8,6 +8,7 @@ class ClassInput extends Component {
     this.state = {
       todos: ["Just some demo tasks", "As an example"],
       inputVal: "",
+      count: 2,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -27,6 +28,7 @@ class ClassInput extends Component {
     this.setState((state) => ({
       todos: state.todos.concat(state.inputVal),
       inputVal: "",
+      count: state.todos.length + 1,
     }));
   }
 
@@ -34,6 +36,7 @@ class ClassInput extends Component {
     this.setState((prevState) => ({
       ...prevState,
       todos: prevState.todos.filter((_, index) => index !== indexToDelete),
+      count: prevState.todos.length - 1,
     }));
   }
 
@@ -56,6 +59,7 @@ class ClassInput extends Component {
         </form>
         <h4>All the tasks!</h4>
         {/* The list of all the To-Do's, displayed */}
+        <p>You have {this.state.count} tasks in your list</p>
         <ul>
           {this.state.todos.map((todo, index) => (
             <>
