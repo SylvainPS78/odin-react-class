@@ -9,11 +9,15 @@ class ClassInput extends Component {
       todos: ["Just some demo tasks", "As an example"],
       inputVal: "",
       count: 2,
+      editingIndex: null,
+      editingValue: "",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleInputChange(e) {
@@ -40,6 +44,24 @@ class ClassInput extends Component {
     }));
   }
 
+  handleSave(indexToSave, valueToSave) {
+    this.setState((prevState) => ({
+      ...prevState,
+      todos: prevState.todos.map((todo, index) =>
+        index === indexToSave ? valueToSave : todo
+      ),
+      editingIndex: null,
+      editingValue: "",
+    }));
+  }
+
+  handleEdit(indexToEdit) {
+    this.setState({
+      editingIndex: indexToEdit,
+      editingValue: this.state.todos[indexToEdit],
+    });
+  }
+
   render() {
     return (
       <section>
@@ -62,10 +84,28 @@ class ClassInput extends Component {
         <p>You have {this.state.count} tasks in your list</p>
         <ul>
           {this.state.todos.map((todo, index) => (
-            <>
-              <li key={todo}>{todo}</li>
+            <li key={`${todo}-${index}`} className="button-container">
+              {this.state.editingIndex === index ? (
+                <input
+                  value={this.state.editingValue}
+                  onChange={(e) => this.setState({ editingValue: e.target.value })}
+                />
+              ) : (
+                todo
+              )}
               <button onClick={() => this.handleDelete(index)}>DELETE</button>
-            </>
+              <button
+                onClick={() => {
+                  if (this.state.editingIndex === index) {
+                    this.handleSave(index, this.state.editingValue);
+                  } else {
+                    this.handleEdit(index);
+                  }
+                }}
+              >
+                {this.state.editingIndex === index ? "SAVE" : "EDIT"}
+              </button>
+            </li>
           ))}
         </ul>
       </section>
