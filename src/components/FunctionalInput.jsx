@@ -10,6 +10,8 @@ const FunctionalInput = ({ name }) => {
   const [todos, setTodos] = useState(["Just some demo tasks", "As an example"]);
   const [inputVal, setInputVal] = useState("");
   const [count, setCount] = useState(todos.length);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editingValue, setEditingValue] = useState("");
 
   const handleInputChange = (e) => {
     setInputVal(e.target.value);
@@ -29,6 +31,21 @@ const FunctionalInput = ({ name }) => {
     );
     const newLength = todos.length - 1;
     setCount(newLength);
+  };
+
+  const handleEdit = (indexToEdit) => {
+    setEditingIndex(indexToEdit);
+    setEditingValue(todos[indexToEdit]);
+  };
+
+  const handleSave = (indexToSave, valueToSave) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo, index) =>
+        index === indexToSave ? valueToSave : todo
+      )
+    );
+    setEditingIndex(null);
+    setEditingValue("");
   };
 
   return (
@@ -51,8 +68,15 @@ const FunctionalInput = ({ name }) => {
       <p>You have {count} tasks in your list</p>
       <ul>
         {todos.map((todo, index) => (
-          <>
-            <li key={todo}>{todo}</li>
+          <li key={`${todo}-${index}`} className="button-container">
+            {editingIndex === index ? (
+              <input
+                value={editingValue}
+                onChange={(e) => setEditingValue(e.target.value)}
+              />
+            ) : (
+              todo
+            )}
             <button
               onClick={() => {
                 handleDelete(index);
@@ -60,7 +84,18 @@ const FunctionalInput = ({ name }) => {
             >
               DELETE
             </button>
-          </>
+            <button
+              onClick={() => {
+                if (editingIndex === index) {
+                  handleSave(index, editingValue);
+                } else {
+                  handleEdit(index);
+                }
+              }}
+            >
+              {editingIndex === index ? "SAVE" : "EDIT"}
+            </button>
+          </li>
         ))}
       </ul>
     </section>
